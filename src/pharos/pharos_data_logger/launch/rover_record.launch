@@ -1,0 +1,42 @@
+<launch>
+	<arg name="name" default="test" />
+	<!-- <node pkg="rosbag" type="record" name="rosbag_raw" output="screen" required="true"
+	args="-O /media/pharos/pharos_bagfile/bagfile/$(arg bag_name)_raw.bag -e -->
+	<node pkg="rosbag" type="record" name="rosbag_raw" output="screen" required="true"
+	args="-O /home/iris/Documents/Bagfile/$(arg name).bag -e 
+
+	/diagnostics
+	/joint_states
+	/husky_velocity_controller/odom
+
+	/velodyne_packets
+
+	/usb_cam/image_raw/compressed
+	/usb_cam/camera_info
+
+	/sbg/air_data
+	/sbg/ekf_nav
+	/sbg/ekf_quat
+	/sbg/gps_pos
+	/sbg/imu_data
+	/sbg/imu_short
+	/sbg/mag
+	/sbg/status
+	/sbg/utc_time
+
+	/imu/data
+	/imu/pos_ecef
+	/imu/utc_ref
+	/imu/mag
+	/imu/velocity
+	/imu/nav_sat_fix
+	/imu/temp
+
+	" > 
+	</node>
+<!-- 	<node pkg="rosbag" type="record" name="rosbag_entire" output="screen" required="true"
+	args="-a -O $(find pharos_data_logger)/bags/entire_data/$(arg bag_name)_entire.bag">
+	</node> -->
+</launch>
+
+<!--  roslaunch pharos_data_logger record.launch bag_name:=20160720_1 -->

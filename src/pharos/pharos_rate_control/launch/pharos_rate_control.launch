@@ -1,0 +1,16 @@
+<launch>
+	<arg name="arg1" default="0"/>
+
+	<node name="pharos_rate_control_node" pkg="pharos_rate_control" type="pharos_rate_control_node" output="screen">
+		<param name="publish_rate" value="$(arg arg1)"/>
+
+		<remap from="sub" to="haptic_device" />
+		<remap from="pub" to="motor_cmd" />
+		<remap from="pub2" to="force_feedback" />
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

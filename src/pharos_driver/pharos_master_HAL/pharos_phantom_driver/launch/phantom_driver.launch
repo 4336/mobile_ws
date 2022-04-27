@@ -1,0 +1,17 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="scale" default="10"/>
+	<arg name="rviz" default="false"/>
+
+	<include file="$(find phantom_driver)/launch/phantom_driver.launch" />
+
+	<include file="$(find pharos_master_interface)/launch/master_driver.launch"/>
+
+	<node name="pharos_phantom_driver" pkg="pharos_phantom_driver" type="pharos_phantom_driver_node" output="screen">
+		<param name="scaler" value="$(arg scale)"/>
+	</node>
+
+	<node name="pharos_pedal_driver" pkg="pharos_phantom_driver" type="pharos_pedal_driver_node" output="screen"/>
+
+
+</launch>

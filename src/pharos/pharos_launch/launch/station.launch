@@ -1,0 +1,8 @@
+<launch>
+
+  <include file="$(find pharos_launch)/launch/multimaster.launch"/>
+  
+  <include file="$(find pharos_localization)/launch/pharos_localization.launch"/>
+  <include file="$(find pharos_tf)/launch/pharos_tf.launch"/>
+
+</launch>

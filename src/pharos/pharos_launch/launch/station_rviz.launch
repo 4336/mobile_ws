@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="station_view_husky" pkg="rviz" type="rviz" args="-d $(find pharos_launch)/rviz/station.rviz" output="screen"/>
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+
+  <include file="$(find pharos_launch)/launch/multimaster.launch"/>
+  <include file="$(find pharos_launch)/launch/usb_cam.launch"/>
+  <include file="$(find pharos_launch)/launch/laser.launch"/>
+
+</launch>

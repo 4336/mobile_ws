@@ -1,0 +1,24 @@
+<launch>
+	<arg name="gazebo" default="false"/>
+	<arg name="publish_rate" default="100"/>
+
+	<arg name="map_size" default="10"/>
+	<arg name="cloud_num" default="100"/>
+	<arg name="pos_threshold" default="0.1"/>
+	<arg name="ang_threshold" default="0.1"/>
+
+	<node name="pharos_pcl_stacking_node" pkg="pharos_pcl_stacking" type="pharos_pcl_stacking_node" output="screen">
+		<param name="gazebo" value="$(arg gazebo)"/>
+		
+		<param name="map_size" value="$(arg map_size)"/>
+		<param name="cloud_num" value="$(arg cloud_num)"/>
+		<param name="pos_threshold" value="$(arg pos_threshold)"/>
+		<param name="ang_threshold" value="$(arg ang_threshold)"/>
+
+	</node>
+
+	<!-- <include file="$(find pharos_tf)/launch/pharos_husky_tf.launch">
+		<arg name="gazebo" value="$(arg gazebo)" />
+	</include> -->
+
+</launch>

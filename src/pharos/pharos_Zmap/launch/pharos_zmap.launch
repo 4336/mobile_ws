@@ -1,0 +1,20 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="x_point" default="50"/>
+	<arg name="y_point" default="50"/>
+	<arg name="radius" default="0.1"/>
+
+	<node name="pharos_zmap" pkg="pharos_zmap" type="pharos_zmap" output="screen">
+		<!--<param name="publish_rate" value="$(arg publish_rate)"/>
+		<remap from="test_pub" to="test_pub" />
+		<remap from="test_sub" to="test_sub" />-->
+		<param name="x_point" value="$(arg x_point)"/>
+		<param name="y_point" value="$(arg y_point)"/>
+		<param name="radius" value="$(arg radius)"/>
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

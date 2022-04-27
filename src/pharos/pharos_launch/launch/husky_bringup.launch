@@ -1,0 +1,9 @@
+<launch>
+    <!-- <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+        <arg name="rpm" default="300"/>
+    </include>
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+    <include file="$(find xsens_mti_driver)/launch/xsens_mti_node.launch"/> -->
+    <include file="$(find pharos_launch)/launch/multimaster.launch"/>
+    <include file="$(find husky_base)/launch/base.launch" />
+</launch>

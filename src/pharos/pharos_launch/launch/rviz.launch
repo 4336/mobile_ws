@@ -1,0 +1,3 @@
+<launch>
+  <node name="pharos_rviz" pkg="rviz" type="rviz" args="-d $(find pharos_launch)/rviz/pharos.rviz" />
+</launch>

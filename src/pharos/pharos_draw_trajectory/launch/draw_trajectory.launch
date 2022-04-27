@@ -1,0 +1,19 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="scale" default="20"/>
+	<arg name="gazebo" default="false"/>
+
+	<node name="pharos_draw_trajectory" pkg="pharos_draw_trajectory" type="pharos_draw_trajectory_node" output="screen">
+		<param name="scaler" value="$(arg scale)"/>
+		<param name="gazebo" value="$(arg gazebo)"/>
+
+		<!-- <remap from="sub" to="haptic_device" />
+		<remap from="pub" to="drawing" />
+		<remap from="pub2" to="trajectory" /> -->
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

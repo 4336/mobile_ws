@@ -1,0 +1,5 @@
+<launch>
+	<node name="husky_ekf_node" pkg="pharos_localization" type="husky_odometry_ekf.py" output="screen">
+		<!-- <param name="param_test" value="true" /> -->
+	</node>
+</launch>

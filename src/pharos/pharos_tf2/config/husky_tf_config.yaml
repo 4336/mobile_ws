@@ -1,0 +1,114 @@
+tf_num: 8
+#
+tf_1:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'FL'
+  x: 0.255
+  y: 0.27
+  z: 0.18
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_2:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'FR'
+  x: 0.255
+  y: -0.27
+  z: 0.18
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_3:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'RL'
+  x: -0.255
+  y: 0.27
+  z: 0.18
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_4:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'RR'
+  x: -0.255
+  y: -0.27
+  z: 0.18
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_5:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'velodyne_base'
+  x: 0.30
+  y: 0.0
+  z: 0.4
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_6:
+  frame_id: 'velodyne_base'
+  child_frame_id: 'velodyne'
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_7:
+  frame_id: 'velodyne'
+  child_frame_id: 'camera_base'
+  x: 0.0
+  y: 0.0
+  z: 0.05
+  roll: 0
+  pitch: 3.5
+  yaw: 0
+#
+tf_8:
+  frame_id: 'camera_base'
+  child_frame_id: 'usb_cam'
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  roll: -90
+  pitch: 0
+  yaw: -90
+#
+#
+#
+tf_9:
+  frame_id: 'odom'
+  child_frame_id: 'vehicle_frame'
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+tf_10:
+  frame_id: 'vehicle_frame'
+  child_frame_id: 'haptic_field'
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  roll: 0
+  pitch: 0
+  yaw: 0
+#
+# tf_4:
+#   frame_id: 'odom'
+#   child_frame_id: 'start_point'
+#   x: 0.0
+#   y: 0.0
+#   z: 0.0
+#   roll: 0
+#   pitch: 0
+#   yaw: 0
+#

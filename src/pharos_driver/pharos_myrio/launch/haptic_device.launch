@@ -1,0 +1,16 @@
+<launch>
+	<arg name="scale" default="1" />
+
+	<node name="haptic_device" pkg="pharos_myrio" type="haptic_device_node" required="true" output="screen">
+		<param name="frame_id" value="haptic_device" />
+		<param name="udp/ip" value="192.168.2.250" />
+		<param name="udp/tx_port" value="39002" />
+		<param name="udp/rx_port" value="39003" />
+		<param name="publish_rate" value="100" />
+
+		<param name="scaler" value="$(arg scale)" />
+
+		<remap from="haptic_device" to="haptic_device" />
+		<remap from="force_feedback" to="force_feedback" />
+	</node>
+</launch>

@@ -1,0 +1,30 @@
+<launch>
+	<!-- <arg name="publish_rate" default="100"/> -->
+	<arg name="name" default="rename"/>
+
+	<node name="pharos_bag_rename_node" pkg="pharos_bag_restamp" type="pharos_bag_rename_node" output="screen">
+		<!-- <param name="publish_rate" value="$(arg publish_rate)"/> -->
+
+		<!-- <remap from="test_pub" to="test_pub" /> -->
+	</node>
+
+	<node pkg="rosbag" type="record" name="rosbag_raw" output="screen" required="true"
+	args="-O /home/dong_hyun_kim/Documents/Bagfile/$(arg name).bag -e 
+
+	/bag/velodyne_points
+
+	/bag/imu/data
+
+	/bag/odometry/imu
+	/bag/odometry/filtered
+
+	/bag/camera/color/image_raw/compressed
+
+	" > 
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

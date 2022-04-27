@@ -1,0 +1,7 @@
+<launch>
+
+  <include file="$(find pharos_myrio)/launch/haptic_device.launch"/>
+  <include file="$(find pharos_draw_trajectory)/launch/draw_trajectory.launch"/>
+  <include file="$(find pharos_motion)/launch/pharos_motion.launch"/>
+
+</launch>

@@ -1,0 +1,20 @@
+<launch>
+	<arg name="frame" default="ekf"/>
+	<arg name="fix" default="false"/>
+	<arg name="fix_x" default="444750.0"/>
+	<arg name="fix_y" default="3944600.0"/>
+
+	<param name="frame_id" value="odom" />
+	<param name="vehicle_frame_id" value="$(arg frame)" /><!-- reference frame -->
+
+	<node name="husky_odometry_node" pkg="gps_common" type="husky_odometry_node" output="screen">
+		<param name="relative_gps" value="true" />
+		<param name="relative_gps_fix" value="$(arg fix)" />
+		<param name="fix_origin_x" value="$(arg fix_x)" />
+		<param name="fix_origin_y" value="$(arg fix_y)" />
+		<!-- <param name="fix_origin_z" value="0.0" /> -->
+	</node>
+	
+	<include file="$(find pharos_tf2)/launch/pharos_tf2.launch"/>
+
+</launch>

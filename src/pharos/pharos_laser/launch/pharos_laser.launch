@@ -1,0 +1,22 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="num_gain" default="10"/>
+	<arg name="std_gain" default="1"/>
+	<arg name="cell_size" default="0.1"/>
+
+	<node name="pharos_laser_node" pkg="pharos_laser" type="pharos_laser_node" output="screen">
+		<param name="publish_rate" value="$(arg publish_rate)"/>
+
+		<param name="num_gain" value="$(arg num_gain)"/>
+		<param name="std_gain" value="$(arg std_gain)"/>
+		<param name="cell_size" value="$(arg cell_size)"/>
+
+		<!-- <remap from="test_pub" to="test_pub" />
+		<remap from="test_sub" to="test_sub" /> -->
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

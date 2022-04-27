@@ -1,0 +1,16 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="arg1" default="0"/>
+
+	<node name="command_vel" pkg="command_vel" type="command_vel" output="screen">
+		<param name="publish_rate" value="$(arg publish_rate)"/>
+
+		<remap from="test_pub" to="test_pub" />
+		<remap from="test_sub" to="test_sub" />
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

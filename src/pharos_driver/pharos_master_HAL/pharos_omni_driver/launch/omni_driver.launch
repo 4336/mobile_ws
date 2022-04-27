@@ -1,0 +1,18 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="scale" default="10"/>
+	<arg name="rviz" default="false"/>
+
+	<node name="pharos_omni_driver" pkg="pharos_omni_driver" type="pharos_omni_driver_node" output="screen">
+		<param name="scaler" value="$(arg scale)"/>
+
+		<!-- <remap from="sub" to="haptic_device" />
+		<remap from="pub" to="drawing" />
+		<remap from="pub2" to="trajectory" /> -->
+	</node>
+
+	<include file="$(find omni_common)/launch/omni.launch" >
+		<arg name="rviz" value="$(arg rviz)" />
+	</include>
+
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+	<node name="mobile_robot_node" pkg="pharos_myrio" type="mobile_robot_node" required="true" output="screen">
+		<!-- <rosparam command="load" file="$(find pharos_myrio)/config/gaesky.yaml" /> -->
+		<param name="frame_id" value="mobile_robot" />
+		<param name="udp/ip" value="192.168.3.25" />
+		<param name="udp/tx_port" value="39000" />
+		<param name="udp/rx_port" value="39001" />
+		<param name="publish_rate" value="100" />
+		<remap from="motor_cmd" to="motor_cmd" />
+		<remap from="motor_vel" to="motor_vel" />
+	</node>
+</launch>

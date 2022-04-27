@@ -1,0 +1,14 @@
+<launch>
+  <arg name="width" default="640" />
+  <arg name="height" default="360" />
+
+  <include file="$(find pharos_launch)/launch/usb_cam.launch">
+    <arg name="width" value="$(arg width)" />
+    <arg name="height" value="$(arg height)" />
+  </include>
+
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+</launch>

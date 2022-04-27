@@ -1,0 +1,14 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+
+	<node name="pharos_force_feedback_node" pkg="pharos_force_feedback" type="pharos_force_feedback_node" output="screen">
+		<param name="publish_rate" value="$(arg publish_rate)"/>
+		<param name="end_point" value="haptic/end_point"/>
+		<param name="force_feedback" value="force_feedback"/>
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

@@ -1,0 +1,19 @@
+<launch>
+	<arg name="publish_rate" default="100"/>
+	<arg name="vel" default="0.2"/>
+	<arg name="lah" default="0.3"/>
+
+	<node name="pharos_husky_motion_node" pkg="pharos_motion" type="pharos_husky_motion_node" output="screen">
+		<param name="publish_rate" value="$(arg publish_rate)"/>
+		<param name="vel" value="$(arg vel)"/>
+		<param name="lookAhead" value="$(arg lah)"/>
+
+		<!-- <remap from="test_pub" to="test_pub" />
+		<remap from="test_sub" to="test_sub" /> -->
+	</node>
+
+	<!-- <include file="$(find pharos_pkg)/launch/pharos_launch.launch">
+		<arg name="param1" value="$(arg arg1)" />
+	</include> -->
+
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+	<include file="$(find usb_cam)/launch/usb_cam.launch"/>
+	<include file="$(find velodyne_pointcloud)/launch/vlp16.launch"/>
+	<include file="$(find sbg_driver)/launch/husky_config.launch"/>
+</launch>
