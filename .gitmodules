@@ -1,0 +1,6 @@
+[submodule "src/pharos_driver/phantom_ros_driver"]
+	path = src/pharos_driver/phantom_ros_driver
+	url = git@github.com:iris-kaist/phantom_ros_driver
+[submodule "src/pharos/pharos_perception"]
+	path = src/pharos/pharos_perception
+	url = git@github.com:ryuye21/pharos_perception.git
