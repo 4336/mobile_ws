@@ -3,6 +3,8 @@
 	<arg name="scale" default="10"/>
 	<arg name="rviz" default="false"/>
 
+	<param name="use_sim_time" value="false"/>
+
 	<include file="$(find phantom_driver)/launch/phantom_driver.launch" />
 
 	<include file="$(find pharos_master_interface)/launch/master_driver.launch"/>
@@ -12,6 +14,5 @@
 	</node>
 
 	<node name="pharos_pedal_driver" pkg="pharos_phantom_driver" type="pharos_pedal_driver_node" output="screen"/>
-
 
 </launch>

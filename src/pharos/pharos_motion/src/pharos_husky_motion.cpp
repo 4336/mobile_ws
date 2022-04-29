@@ -250,7 +250,7 @@ void TrajectoryCallback(const nav_msgs::Path::ConstPtr& msg)
 	// }
 
 	static geometry_msgs::Point p;
-	static geometry_msgs::Point T_point;
+	static geometry_msgs::Point T_point; // odom coordinate
 	for(int i=0; i < msg->poses.back().header.seq; i++){
 		p.x = msg->poses[i].pose.position.x;
 		p.y = msg->poses[i].pose.position.y;
@@ -274,9 +274,9 @@ void DrawvingStateCallback(const pharos_msgs::DrawvingState::ConstPtr& msg)
 }
 void MasterPoseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
-	MasterPoint_.x = -msg->pose.position.x;
-	MasterPoint_.y = -msg->pose.position.y + 0.15;
-	MasterPoint_.z = msg->pose.position.z;
+	MasterPoint_.x = msg->pose.position.x;
+	MasterPoint_.y =-msg->pose.position.z;
+	MasterPoint_.z = msg->pose.position.y;
 }
 
 int main(int argc, char **argv)
@@ -286,11 +286,13 @@ int main(int argc, char **argv)
 	ros::NodeHandle nh;
 	ros::NodeHandle pnh("~");
 
+	nh.param<bool>("use_sim_time", false);
+
 	pnh.param<float>("vel", desiredVel, 0.1);
 	pnh.param<float>("lookAhead", lookAhead, 0.1);
 
-	sub_rover_odom_ = nh.subscribe("/odom/slam_ekf", 10, OdomCallback); //topic que function
-	sub_trajectory_ = nh.subscribe("trajectory", 10, TrajectoryCallback); //topic que function
+	sub_rover_odom_ = nh.subscribe("/odom/vehicle", 10, OdomCallback); //topic que function
+	sub_trajectory_ = nh.subscribe("/trajectory", 10, TrajectoryCallback); //topic que function
 	sub_master_state_ = nh.subscribe("/master/state", 10, DrawvingStateCallback); //topic que function
 	sub_master_pose_ = nh.subscribe("/master/phantom/pose", 10, MasterPoseCallback); //topic que function
 

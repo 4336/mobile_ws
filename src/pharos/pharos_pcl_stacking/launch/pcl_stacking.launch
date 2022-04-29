@@ -3,7 +3,7 @@
 	<arg name="publish_rate" default="100"/>
 
 	<arg name="map_size" default="10"/>
-	<arg name="cloud_num" default="100"/>
+	<arg name="cloud_num" default="10"/>
 	<arg name="pos_threshold" default="0.1"/>
 	<arg name="ang_threshold" default="0.1"/>
 

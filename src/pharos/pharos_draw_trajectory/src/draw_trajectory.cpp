@@ -1,5 +1,4 @@
 #include "ros/ros.h"
-#include "rosgraph_msgs/Clock.h"
 #include "nav_msgs/Path.h"
 #include "nav_msgs/Odometry.h"
 #include "geometry_msgs/Point.h"
@@ -20,7 +19,7 @@ ros::Subscriber odom2tf_sub_;
 ros::Subscriber sub_master_pose_;
 ros::Subscriber drawving_state_sub_;
 ros::Subscriber sub_rover_odom_;
-ros::Publisher pub_start_odom_;
+// ros::Publisher pub_start_odom_;
 ros::Publisher drawing_pub_;
 ros::Publisher trajectory_pub_;
 ros::Publisher pub_end_point_;
@@ -40,8 +39,6 @@ geometry_msgs::Vector3Stamped end_point_;
 pharos_msgs::DrawvingState State_;
 pharos_msgs::DrawvingState State_old_;
 
-ros::Time GazeboClock_;
-
 float scaler_;
 std::string frame_id_;
 
@@ -50,14 +47,11 @@ bool isForward_ = true;
 bool isOdomInit_ = false;
 bool clear_request_ = true;
 
-ros::Time Clock()
-{
-	if(isGazebo_) return GazeboClock_;
-	return ros::Time::now();
-}
 
 void Init(){
 	path_.header.frame_id = frame_id_;
+
+	start_odom_.pose.pose.orientation.w = 1;
 }
 
 
@@ -84,7 +78,7 @@ void UpdatePath(int *seq)
 
 	if(clear_request_){
 		*seq = 0;
-		path_.header.stamp = Clock();
+		path_.header.stamp = ros::Time::now();
 		Pos.pose.position.x = 0;
 		Pos.pose.position.y = 0;
 		Pos.pose.position.z = 0;
@@ -100,11 +94,11 @@ void UpdatePath(int *seq)
 	Pos.pose.position.x += pos_.y - pos_old_.y;
 
 	Pos.header.seq = (*seq)++;
-	Pos.header.stamp = Clock();
+	Pos.header.stamp = ros::Time::now();
 
 	path_.poses.push_back(Pos);
 
-	end_point_.header.stamp = Clock();
+	end_point_.header.stamp = ros::Time::now();
 	end_point_.header.frame_id = frame_id_;
 
 	end_point_.vector.x = Pos.pose.position.x;
@@ -144,11 +138,11 @@ void DrawvingStateCallback(const pharos_msgs::DrawvingState::ConstPtr& msg)
 				if(!State_.index & State_old_.index){
 					static ros::Time Tic = ros::Time(0);
 					if(Tic == ros::Time(0)){
-						Tic = Clock();
-					}else if(Clock() - Tic > ros::Duration(1)){
-						Tic = Clock();
+						Tic = ros::Time::now();
+					}else if(ros::Time::now() - Tic > ros::Duration(1)){
+						Tic = ros::Time::now();
 					}else{
-						if(Clock() - Tic < ros::Duration(0.3)){
+						if(ros::Time::now() - Tic < ros::Duration(0.3)){
 							isForward_ = !isForward_;
 						}
 						Tic = ros::Time(0);
@@ -188,29 +182,53 @@ void DrawvingStateCallback(const pharos_msgs::DrawvingState::ConstPtr& msg)
 	}
 }
 
-void StatePoseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg)
+void StatePoseCallback(tf::TransformBroadcaster &br, const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
 	static int seq = 0;
 	static geometry_msgs::Point stylus;
 	stylus = msg->pose.position;
 
-	pos_.x = stylus.x *-1 * scaler_;
-	pos_.y = stylus.y *-1 * scaler_;
-	pos_.z = stylus.z *1 ;
+	pos_.x = stylus.x *1 * scaler_;
+	pos_.y = stylus.z *-1 * scaler_;
+	pos_.z = stylus.y *1 ;
 	// state_.all = (int)msg->vector.z;
 
 	
 	if(State_.index){
 		if(State_.state == State_.START){
 			UpdatePath(&seq);
-			path_.header.stamp = Clock();
+			path_.header.stamp = ros::Time::now();
 			drawing_pub_.publish(path_);
 		}
 	}
 
 
-	start_odom_.header.stamp = Clock();
-	pub_start_odom_.publish(start_odom_);
+// START odom to start_point TF Publisher
+
+	start_odom_.header.stamp = ros::Time::now();
+	// pub_start_odom_.publish(start_odom_);
+
+	static nav_msgs::Odometry odom_old;
+	tf::Transform transform;
+
+	transform.setOrigin( tf::Vector3(start_odom_.pose.pose.position.x, start_odom_.pose.pose.position.y, start_odom_.pose.pose.position.z) );
+
+	tf::Quaternion quat;
+	quat.setX(start_odom_.pose.pose.orientation.x);
+	quat.setY(start_odom_.pose.pose.orientation.y);
+	quat.setZ(start_odom_.pose.pose.orientation.z);
+	quat.setW(start_odom_.pose.pose.orientation.w);
+	transform.setRotation(quat);
+
+	if(odom_old.pose.pose.position.x != start_odom_.pose.pose.position.x || odom_old.pose.pose.position.y != start_odom_.pose.pose.position.y){
+		br.sendTransform(tf::StampedTransform(transform, start_odom_.header.stamp, start_odom_.header.frame_id, start_odom_.child_frame_id));
+	}else{
+		// ROS_WARN("Same Transform");
+	}
+
+	odom_old = start_odom_;
+
+// odom to start_point TF Publisher END
 
 	pos_old_ = pos_;
 }
@@ -242,13 +260,15 @@ int main(int argc, char **argv)
 	pnh.param<std::string>("frame_id", frame_id_, "start_point");
 
 	static tf::TransformBroadcaster br;
-	odom2tf_sub_ = nh.subscribe<nav_msgs::Odometry>("/odom/start_point", 1, 
-		boost::bind(&Odometry2TF, boost::ref(br), _1));
-	sub_master_pose_ = nh.subscribe("/master/pose", 10, StatePoseCallback); //topic que function
+	// odom2tf_sub_ = nh.subscribe<nav_msgs::Odometry>("/odom/start_point", 10, 
+	// 	boost::bind(&Odometry2TF, boost::ref(br), _1));
+	// sub_master_pose_ = nh.subscribe("/master/pose", 10, StatePoseCallback); //topic que function
+	sub_master_pose_ = nh.subscribe<geometry_msgs::PoseStamped>("/master/pose", 10, 
+		boost::bind(&StatePoseCallback, boost::ref(br), _1));
 	drawving_state_sub_ = nh.subscribe("/master/state", 10, DrawvingStateCallback); //topic que function
-	sub_rover_odom_ = nh.subscribe("/odom/slam_ekf", 10, RoverOdomCallback); //topic que function
+	sub_rover_odom_ = nh.subscribe("/odom/vehicle", 10, RoverOdomCallback); //topic que function
 
-	pub_start_odom_ = nh.advertise<nav_msgs::Odometry>("/odom/start_point", 10); //topic que
+	// pub_start_odom_ = nh.advertise<nav_msgs::Odometry>("/odom/start_point", 10); //topic que
 	drawing_pub_ = nh.advertise<nav_msgs::Path>("/drawing", 10); //topic que
 	trajectory_pub_ = nh.advertise<nav_msgs::Path>("/trajectory", 10); //topic que
 	pub_end_point_ = nh.advertise<geometry_msgs::Vector3Stamped>("/master/end_point", 10); //topic que

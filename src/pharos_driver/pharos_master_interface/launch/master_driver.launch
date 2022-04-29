@@ -1,19 +1,20 @@
-
-<!DOCTYPE launch [ <!ENTITY hz "100"> ]>
-<!-- I declared hz value! Do you feel compatable? -->
-
 <launch>
+
+	<arg name="hz" default="100"/>
+
 	<arg name="port" default="T300" />
 	<arg name="k" default="0.0025" />
 	<arg name="a_gain" default="0.00" />
 	<arg name="v_gain" default="0.00" />
 
 	<node pkg="pharos_master_interface" name="master_driver_node" type="master_driver_node" output="screen">
+
 		<param name="setPort" value="/dev/$(arg port)" />
 		<param name="setBaudrate" value="115200" />
-		<param name="setHz" value= "&hz;" />
+		<param name="setHz" value= "$(arg hz)" />
 		<param name="k" value="$(arg k)" />
 		<param name="a_gain" value="$(arg a_gain)" />
 		<param name="v_gain" value="$(arg v_gain)" />
 	</node>
+
 </launch>

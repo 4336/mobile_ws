@@ -1,5 +1,4 @@
 <launch>
-	<arg name="publish_rate" default="100"/>
 	<arg name="scale" default="20"/>
 	<arg name="gazebo" default="false"/>
 

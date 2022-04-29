@@ -3,7 +3,10 @@
 	<arg name="vel" default="0.2"/>
 	<arg name="lah" default="0.3"/>
 
+	<arg name="use_sim_time" default="false"/>
+
 	<node name="pharos_husky_motion_node" pkg="pharos_motion" type="pharos_husky_motion_node" output="screen">
+		<param name="use_sim_time" value="$(arg use_sim_time)"/>
 		<param name="publish_rate" value="$(arg publish_rate)"/>
 		<param name="vel" value="$(arg vel)"/>
 		<param name="lookAhead" value="$(arg lah)"/>

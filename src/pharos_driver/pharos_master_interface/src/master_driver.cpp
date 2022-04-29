@@ -151,6 +151,8 @@ int main (int argc, char** argv){
     ros::NodeHandle nh;
     ros::NodeHandle pnh("~");
 
+    nh.setParam("use_sim_time", false);
+
     pnh.param<std::string>("setPort", setPortName, "/dev/ttyUSB0");
     pnh.param<int>("setBaudrate", BaudrateNum, 115200);
     pnh.param<double>("setHz", hzNum, 100);

@@ -171,7 +171,7 @@ float interpolation (float x, float y, pcl::PointCloud<pcl::PointXYZI> map)
 	pcl::toROSMsg(GridTest_,gridTestMsg_);
 
 	gridTestMsg_.header.stamp = ros::Time::now();
-	gridTestMsg_.header.frame_id = "haptic_field";
+	gridTestMsg_.header.frame_id = "vehicle_frame";
 
 	return output;
 }
@@ -255,7 +255,7 @@ void force_feedback (pcl::PointCloud<pcl::PointXYZI> map, float x, float y, geom
 	}
 
 	pcl::toROSMsg(xy_force_point,ObstacleMsg_);
-	ObstacleMsg_.header.frame_id = "haptic_field";
+	ObstacleMsg_.header.frame_id = "vehicle_frame";
 	ObstacleMsg_.header.stamp = ros::Time::now();
 	pub_obstacle_map_.publish (ObstacleMsg_);
 
@@ -428,7 +428,7 @@ void EndPointCallback(const geometry_msgs::Vector3Stamped::ConstPtr& handle)
 	forceMarker_.pose.orientation.w = q.w();
 
 	forceMarker_.header.stamp = ros::Time::now();
-	forceMarker_.header.frame_id = "haptic_field";
+	forceMarker_.header.frame_id = "vehicle_frame";
 	forceMarker_.pose.position.x = handle->vector.x;
 	forceMarker_.pose.position.y = handle->vector.y;
 	forceMarker_.pose.position.z = 0;
